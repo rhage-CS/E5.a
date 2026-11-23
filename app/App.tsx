@@ -25,6 +25,7 @@ export function App({ session }: { session: Session }) {
 
   const solved = isSolved(state.puzzle);
   const last = state.level === LEVELS.length - 1;
+  const canUndo = state.past.length > 0;
 
   return (
     <main className="app">
@@ -59,6 +60,13 @@ export function App({ session }: { session: Session }) {
             )}
           </p>
         )}
+        <button
+          type="button"
+          disabled={!canUndo}
+          onClick={() => session.dispatch({ kind: "undo" })}
+        >
+          Undo
+        </button>
         <button
           type="button"
           onClick={() => session.dispatch({ kind: "restart" })}
